@@ -1,5 +1,5 @@
 <h1 align="center">
-✨🚀 <span style="color:#00FFAA;">NaufraBot V3</span> 🤖💚
+✨🚀 <span style="color:#00FFAA;">NaufraBot V4</span> 🤖💚
 </h1>
 
 <p align="center">
