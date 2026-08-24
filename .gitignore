@@ -1,0 +1,4 @@
+session/
+node_modules/
+settings/estadoBot.json
+*.log

@@ -189,13 +189,13 @@ const getRandom = (ext) => {
 return `${Math.floor(Math.random() * 10000)}${ext}`;
 };
 
-const banner2 = cfonts.render((`Canal: https://youtube.com/@naufrazapp_bots?si=QnmcPO8RKDVtCmwJ\nCreador Oficial: @Naufra.exe`), {
+const banner2 = cfonts.render((`ANIA STUDIO\nCreadora: ANIA STUDIO`), {
 font: 'console',
 align: 'center',
 gradient: ['red', 'magenta']
 });
  
-const banner3 = cfonts.render((`NUFRA|BOT`), {
+const banner3 = cfonts.render((`ANIA|BOT`), {
   font: 'block',
   align: "center",
   gradient: ['red', 'magenta']
@@ -244,8 +244,8 @@ return `-c ${key}=${value}`
 }).concat(config.presets).filter(Boolean)
 }
 
-const authorname = "Naufra"
-const packname = "Creador: @Naufra"
+const authorname = "Ania Studio"
+const packname = "Creador: @AniaStudio"
 
 const chyt = "558288279194@s.whatsapp.net";
 const nit = "554491712954@s.whatsapp.net";

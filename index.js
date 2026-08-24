@@ -1,3 +1,12 @@
+
+
+
+
+
+
+
+
+
 //Base 100% Editable creditos a Naufrabot 
 
 //Página oficial naufrabot.com
@@ -36,12 +45,13 @@ const chalk = require('chalk')
 const color = (text, color) => { return !color ? chalk.green(text) : chalk.keyword(color)(text) };
  
  //baner
-const banner = cfonts.render("Naufra| Bot| Base", {
-  font: 'pallet',
-  align: 'center',
-  gradient: ["green","blue"]
+const banner = cfonts.render("ANIA|STUDIO", {
+  font: 'block',
+  align: 'center'
 })
-      // FUNCIONES DESCARGA 
+
+const bannerNeon = chalk.hex('#FF73DC')(banner.string)
+// FUNCIONES DESCARGA 
 const { fetchJson , getBuffer ,fetchBuffer } = require('./fuction/download/gets.js')
 
 
@@ -115,8 +125,10 @@ return admins
 const groupCache = new Map();
 async function startProo() {
   console.clear();
-  console.log(banner.string);
-  console.log(chalk.cyanBright("🔥 NaufraBot Base"));
+  console.log(chalk.hex('#8FDBFF')('🌸 ✨ ───────────── ✨ 🌸'))
+console.log(banner.string.split('\\n').map(line => [...line].map(c => '╔╗╚╝╠╣═║╦╩╬'.includes(c) ? chalk.white(c) : c === '█' ? chalk.hex('#FF73DC')(c) : c).join('')).join('\\n'))
+console.log(chalk.hex('#8FDBFF')('🌸 ✨ ───────────── ✨ 🌸'))
+  console.log(chalk.cyanBright("🌸 Ania Studio"));
 
   // Estado de sesión
   const { state, saveCreds } = await useMultiFileAuthState("./session");
@@ -191,7 +203,10 @@ async function startProo() {
 sock.ev.on("group-participants.update", async (anu) => {
     console.log("EVENTO RECIBIDO:");
     console.log(JSON.stringify(anu, null, 2));
-if(!welkom.includes(anu.id)) return
+const welcomeStatus = JSON.parse(fs.readFileSync('./settings/Grupo/Json/welcome_status.json'))
+const byeStatus = JSON.parse(fs.readFileSync('./settings/Grupo/Json/bye_status.json'))
+if (anu.action === 'add' && !welcomeStatus.includes(anu.id)) return
+if (anu.action === 'remove' && !byeStatus.includes(anu.id)) return
 try {
 const metadata = await sock.groupMetadata(anu.id)
   participants = anu.participants
@@ -203,21 +218,40 @@ const participante = anu.participants[0]
 const num = participante.phoneNumber || participante.id
 const mem = metadata.participants.length
 const descr = metadata.desc
+const welcomeData = JSON.parse(fs.readFileSync('./settings/Grupo/Json/welcome.json'))
+const mensajePersonalizado = welcomeData[anu.id]
+if (mensajePersonalizado) {
+  await sock.sendMessage(anu.id, {
+    text: `${mensajePersonalizado}\n\n> Ania Studio | 2026 🌸`,
+    mentions: [num]
+  })
+  continue
+}
 const sol = `
-✦━─⌬༓༒༓⌬─━✦
-*✧༺ 𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒐/𝒂 ✦༻✧*
+╭━━━ 💕 ✦ 💕 ━━━╮
+      𝑩𝑰𝑬𝑵𝑽𝑬𝑵𝑰𝑫𝑶/𝑨
+╰━━━ ✨ ✦ ✨ ━━━╯
 
-💌 「 Hola @${num.split('@')[0]} 🌟 y bienvenido/a al reino de *${grup}* 」
-🥂 Que tu estancia esté llena de risas, buena charla 🗨 y alguna que otra copa de hidromiel 🍯🍺
+🌸 ¡Hola @${num.split('@')[0]}! 🌸
 
-📜 Recuerda echarle un ojo a nuestras reglas para no invocar a los dragones 🐉🔥
- 
-『 👥 Miembros actuales: ${mem} 』
-✦━─⌬༓༒༓⌬─━✦
+Nos alegra tenerte en
+「 ${grup} 」 🫧
+
+💫 Esperamos que disfrutes tu estancia,
+conozcas gente y pases un buen rato.
+
+📖 Recuerda revisar las reglas
+para mantener todo tranquilo y bonito. 🩵
+
+╭──────────────╮
+   👥 𝐌𝐢𝐞𝐦𝐛𝐫𝐨𝐬: ${mem}
+╰──────────────╯
+
+> Ania Studio | 2026 🌸
 `
 
 await sock.sendMessage(anu.id, {
-  image: { url: "https://i.ibb.co/HDf3hw9J/20250702-214923.jpg" },
+  image: { url: "https://i.postimg.cc/dV7J9T5N/IMG-20260814-WA0051.jpg" },
   caption: sol,
   mentions: [num]  // 👈 Aquí haces la mención real
 })
@@ -228,22 +262,40 @@ const grup = metadata.subject
 const participante = anu.participants[0]
 const num = participante.phoneNumber || participante.id
 const mem = metadata.participants.length
+const byeData = JSON.parse(fs.readFileSync('./settings/Grupo/Json/bye.json'))
+const mensajePersonalizado = byeData[anu.id]
 
+if (mensajePersonalizado) {
+  await sock.sendMessage(anu.id, {
+    text: `${mensajePersonalizado}\n\n> Ania Studio | 2026 🌸`,
+    mentions: [num]
+  })
+  continue
+}
 const sol = `
-✦━─⌬༓༒༓⌬─━✦
-*✧༺ 𝑫𝒆𝒔𝒑𝒆𝒅𝒊𝒅𝒂 ༻✧*
+╭━━━ 🩵 ✦ 🩵 ━━━╮
+       𝑫𝑬𝑺𝑷𝑬𝑫𝑰𝑫𝑨
+╰━━━ 🩵 ✦ 🩵 ━━━╯
 
-😢 「 @${num.split('@')[0]} ha abandonado *${grup}* 」
+🌸 @${num.split('@')[0]} ha salido del grupo.
 
-🌸 Esperamos que hayas disfrutado tu estancia.
-✨ ¡Las puertas siempre estarán abiertas para ti!
+「 ${grup} 」 🫧
 
-『 👥 Miembros actuales: ${mem} 』
-✦━─⌬༓༒༓⌬─━✦
+💭 Esperamos que hayas disfrutado
+los momentos compartidos por aquí.
+
+✨ Te deseamos lo mejor en tu camino
+y recuerda que siempre puedes volver. 🩵
+
+╭──────────────╮
+   👥 𝐌𝐢𝐞𝐦𝐛𝐫𝐨𝐬: ${mem}
+╰──────────────╯
+
+> Ania Studio | 2026 🌸
 `
 
 await sock.sendMessage(anu.id, {
-  image: { url: "https://i.postimg.cc/0ygy14nq/20251017-152852.jpg" },
+  image: { url: "https://i.postimg.cc/dV7J9T5N/IMG-20260814-WA0051.jpg" },
   caption: sol,
   mentions: [num]
 })
@@ -261,7 +313,10 @@ if (anu.action == 'promote') {
 
 ✦━─┈༓༒༓┈─━✦
 `
-  await sock.sendMessage(anu.id,{image : { url : "https://i.postimg.cc/0ygy14nq/20251017-152852.jpg" }, caption : teks})
+  await sock.sendMessage(anu.id,{
+text: teks,
+mentions: [num]
+})
     }
 
 } 
@@ -305,6 +360,7 @@ enviar(`${sla} Número existente en WhatsApp con  id: ${result.jid}`)
 // Constantes is
  const isGroup = info.key.remoteJid.endsWith('@g.us')
 const sender = isGroup ? info.key.participant: from
+
 let groupMetadata = null;
 
 if (isGroup) {
@@ -323,6 +379,7 @@ const nome = info.pushName ? info.pushName : ''
 const groupAdmins = groupMembers.filter(p => p.admin);
 const Sadm = isGroup ? getGroupAdmins(groupAdmins) :''
 const isCmd = body.startsWith(prefixo)
+console.log("DEBUG COMANDO:", { body, prefixo });
 const messagesC = pes.slice(0).trim().split(/ +/).shift().toLowerCase()
 const args = isCmd
   ? body.slice(prefixo.length).trim().split(/ +/).slice(1)
@@ -373,6 +430,31 @@ function esAdminFlexible(sock, listaDeAdmins = []) {
   });
 }
 
+// 🔇 CONTROL DE USUARIOS SILENCIADOS
+if (isGroup) {
+  try {
+    const mutePath = './settings/Grupo/Json/mute.json'
+    const muteData = JSON.parse(fs.readFileSync(mutePath))
+
+    if (muteData[from] && muteData[from].includes(sender)) {
+      if (isBotGroupAdmins) {
+        await sock.sendMessage(from, {
+          delete: {
+            remoteJid: from,
+            fromMe: false,
+            id: info.key.id,
+            participant: sender
+          }
+        })
+      }
+
+      return
+    }
+  } catch (error) {
+    console.error('Error en sistema mute:', error)
+  }
+}
+
 const isUrl = (url) => { return url.match(new RegExp(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)/, 'gi')) }
 const deviceType = info.key.id.length > 21 ? 'Android' : info.key.id.substring(0, 2) == '3A' ? 'IPhone' : 'WhatsApp web'
 const options = { timeZone: 'America/Lima', hour12: false }
@@ -383,7 +465,7 @@ const hora = new Date().toLocaleTimeString('PE', options)
   const iswelkom = isGroup ? welkom.includes(from) : false
 const isBanGp = isGroup ? bngp.includes(from) : false
 const isAntipv = Antipv.includes('activo')
-const isReg = checkOfReg(sender)
+const isReg = true
  const isAntiLink = isGroup ? antilink.includes(from) : false 
 const coins = MoneyOfSender(sender)
  
@@ -550,18 +632,7 @@ const runtime = function(seconds) {
   vacio: "『 ❓ 𝒆𝒔𝒄𝒓𝒊𝒃𝒆 𝒂𝒍𝒈𝒐, 𝒏𝒐 𝒑𝒖𝒆𝒅𝒐 𝒂𝒅𝒊𝒗𝒊𝒏𝒂𝒓 』",
   miowner: "『 ⛔ 𝒏𝒐 𝒆𝒓𝒆𝒔 𝒎𝒊 𝒄𝒓𝒆𝒂𝒅𝒐𝒓 』",
 
-  registro: `
-╔════◇◆◇════╗
-💬 ❝ 𝑷𝒓𝒊𝒎𝒆𝒓𝒐 𝒅𝒆𝒃𝒆𝒔 𝒓𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒓𝒕𝒆 🤔 ¡𝑬𝒔 𝒇𝒂𝒄𝒊𝒍! 😄 ❞
-💬 ❝ 𝑬𝒔𝒄𝒓𝒊𝒃𝒆:  .𝒓𝒆𝒈 ❞
-╚════◇◆◇════╝
-`,
 
-  yaregistro: `
-╔══════◇◆◇══════╗
-💬 ❝ 𝑳𝒐 𝒍𝒂𝒎𝒆𝒏𝒕𝒐, 𝒚𝒂 𝒆𝒔𝒕𝒂́𝒔 𝒓𝒆𝒈𝒊𝒔𝒕𝒓𝒂𝒅𝒐 🗒 ❞
-╚══════◇◆◇══════╝
-`,
 
   coins: `『 💰 ᴄᴏɪɴs ɪɴsᴜғɪᴄɪᴇɴᴛᴇs @${sender.split('@')[0]} 』`
 }
@@ -591,7 +662,7 @@ color(' GRUPO :','lime'),color(groupName,'cyan'),'\n',
 color(' NOMBRE :','lime'),color(pushname,'cyan'),'\n',
 color(' COMANDO :','lime'),color(comando,'cyan'),'\n',
 color(' HORA :','lime'),color(hora,'cyan'),'\n',
-color(' DATOS :','lime'),color(data,'cyan'),'\n',color(' ╚─━━━━━━ '),color ('𝗘𝗹𝗶𝘀𝘃𝗮𝗻 | 𝗥𝘆𝘂𝗸','red'), '━━━━━─╝')
+color(' DATOS :','lime'),color(data,'cyan'),'\n',color(' ╚─━━━━━━ '),color ('𝗔𝗻𝗶𝗮 | 𝗦𝘁𝘂𝗱𝗶𝗼','red'), '━━━━━─╝')
 
 //pv
 if (!isCmd && !isGroup) console.log( '\n  ╔─━━━━━', color(' 𝗖𝗛𝗔𝗧 「 𝗕𝗢𝗧 」','blue'), '━━━━━─╗','\n',
@@ -607,7 +678,7 @@ color(' GRUPO :','lime'),color(groupName,'cyan'),'\n',
 color(' NOMBRE :','lime'),color(pushname,'cyan'),'\n',
 color(' COMANDO :','lime'),color(comando,'cyan'),'\n',
 color(' HORA :','lime'),color(hora,'cyan'),'\n',
-color(' DATOS :','lime'),color(data,'cyan'),'\n',color(' ╚─━━━━━━ '),color ('𝗘𝗹𝗶𝘀𝘃𝗮𝗻 | 𝗥𝘆𝘂𝗸','red'), '━━━━━─╝')
+color(' DATOS :','lime'),color(data,'cyan'),'\n',color(' ╚─━━━━━━ '),color ('𝗔𝗻𝗶𝗮 | 𝗦𝘁𝘂𝗱𝗶𝗼','red'), '━━━━━─╝')
 
 //mensaje grupo
 if (!isCmd && isGroup) console.log( '\n  ╔─━━━━━', color(' 𝗖𝗛𝗔𝗧「 𝗕𝗢𝗧 」','blue'), '━━━━━─╗','\n',
@@ -648,11 +719,13 @@ switch(comando) {
 case 'prueba':
 enviar(`Este es un comando de prueba 🌟🌟
 
-......`);
+> 𝗔𝗻𝗶𝗮 𝗦𝘁𝘂𝗱𝗶𝗼 🌸✨`);
 break
 
 case 'comando2':
-enviar(`🧩Este es un comando nuevo`);
+enviar(`🧩Este es un comando nuevo
+
+> 𝗔𝗻𝗶𝗮 𝗦𝘁𝘂𝗱𝗶𝗼 🌸✨`);
 break
 //Comandos owner
 
@@ -695,20 +768,12 @@ break;
   
   
   case 'menu':
-case 'help': {
-    if (!isGroup) return;
-    if (!isReg) return enviar(respuesta.registro);
-
+  case 'help': {
     const Mnu = Menu(timeFt, Bot, prefixo, sender, groupName, groupMembers);
+    return enviar(Mnu);
+  }
+  break;
 
-    // Enviar imagen del menú completa
-    await sock.sendMessage(from, {
-        image: { url: JpgBot },
-        caption: Mnu,
-        mentions: [sender]
-    }, { quoted: info });
-}
-break;
 
 case 'boton': 
 case 'botonon':
@@ -861,274 +926,173 @@ sock.sendMessage(from, { image: { url: JpgBot }, caption: botinfo }, { quoted: i
 }
 break 
 
-case 'botcompleto':
-case 'bot':
-enviar(`💫 ¿𝙌𝙪𝙞𝙚𝙧𝙚𝙨 𝙪𝙣 𝙗𝙤𝙩 𝙘𝙤𝙢𝙥𝙡𝙚𝙩𝙤 𝙘𝙤𝙣 𝙨𝙪𝙥𝙚𝙧 𝙁𝙪𝙣𝙘𝙞𝙤𝙣𝙚𝙨? 🤖
-
-*[💡]  ᴏɴʟɪɴᴇ 24/7*
-*[💡]  sᴏᴘᴏʀᴛᴇ 100% ᴅɪsᴘᴏɴɪʙʟᴇ*
-*[💡]  ᴏʀɢᴀɴɪᴄᴇ sᴜ ɢʀᴜᴘᴏ*
-*[💡]  ᴀᴅᴍɪɴɪsᴛʀᴇ sᴜ ɢʀᴜᴘᴏ*
-*[💡]  ᴘʀᴏᴛᴇᴊᴀ sᴜ ɢʀᴜᴘᴏ*
-*[💡]  ᴠᴇᴜʟᴠᴀ sᴜ ɢʀᴜᴘᴏ ᴍᴀs ᴀᴄᴛɪᴠᴏ*
-
-  𝙋𝙍𝙀𝘾𝙄𝙊𝙎 𝙋𝘼𝙍𝘼 𝙀𝙇 𝘼𝙇𝙌𝙐𝙄𝙇𝙀𝙍 𝘿𝙀𝙇 𝘽𝙊𝙏
-
-*┠💵⃟ꦿ〢* ᴘʟᴀɴ ǫᴜɪɴᴄᴇɴᴀʟ (15 dias): USD$ 1,50
-    
-*┠💵⃟ꦿ〢* ᴘʟᴀɴ ᴍᴇɴsᴜᴀʟ (30 dias): USD$ 2,90 ⭐(ᴍᴀs ᴘᴏᴘᴜʟᴀʀ)
-
-*┠💵⃟ꦿ〢* ᴘʟᴀɴ sᴇᴍᴇsᴛʀᴀʟ (180 dias): USD$ 13,90
-
-*┠💵⃟ꦿ〢* ᴘʟᴀɴ ᴀɴᴜᴀʟ (360 dias): USD$ 28,90
-
-*┠💵⃟ꦿ〢* ʙᴏᴛ ᴘᴇʀᴢᴏɴᴀʟɪᴢᴀᴅᴏ (30 dias): USD$ 5,90 ⭐(ᴘᴏᴘᴜʟᴀʀ)
-
-
-╚═════❖•ೋ° 🌟 °ೋ•❖═════╝
-
-*__________🔒 𝙋𝙍𝙊𝙏𝙀𝘾𝘾𝙄𝙊𝙉𝙀𝙎 🔒__________*
-
-*[🔐] ANTI-LINK*
-*[🔐] ANTI-FAKE*
-*[🔐] ANTI-CONTACTO*
-*[🔐] ANTI-LOCALIZACION*
-*[🔐] ANTI-DOCUMENTO*
-*[🔐] ANTI-VIDEO*
-*[🔐] ANTI-IMAGEN*
-*[🔐] ANTI-AUDIO*
-*[🔐] ANTI-VIEWONCE*
-
-*_________🔧 𝙍𝙀𝘾𝙐𝙍𝙎𝙊𝙎 🔧__________*
-*[🛠️] ᴄʀᴇᴀʀ sᴛɪᴄᴋᴇʀs*
-*[🛠️] ᴅᴇsᴄᴀʀɢᴀʀ ᴍᴜsɪᴄᴀs*
-*[🛠️] ᴅᴇsᴄᴀʀɢᴀʀ ᴠɪᴅᴇᴏs*
-*[🛠️] ᴀʙʀɪʀ ʏ ᴄᴇʀʀᴀʀ ɢʀᴜᴘᴏ ᴄᴏɴ ᴛɪᴇᴍᴘᴏ*
-*[🛠️] ʙᴀɴ ʏ ᴋɪᴄᴋ*
-*[🛠️] ᴊᴜᴇɢᴏs*
-*[🛠️] ᴄᴏᴍᴀɴᴅᴏs +🔞*
-
-
-*_________👑 𝘾𝙊𝙉𝙏𝙍𝘼𝙏𝙀 👑__________*
-[🔥] *Puedes contratar el bot directamente desde nuestra pagina web oficial*👇
-[💬] https://naufrabot.com/`);
-break
-
-case 'personalizarbot': {
-
-let texto = `🤖 *PERSONALIZAR NAUFRABOT BASE*
-
-Este bot es *100% editable*, puedes modificarlo completamente a tu gusto.
-
-📚 *Pasos para personalizar el bot*
-
-1️⃣ Cambiar nombre del bot
-Edita el nombre en el archivo principal del bot.
-
-2️⃣ Cambiar prefijo
-Puedes cambiar el prefijo de comandos fácilmente.
-
-3️⃣ Cambiar mensajes
-Todos los mensajes del bot son editables.
-
-4️⃣ Cambiar logo o foto
-Puedes poner tu propia imagen o marca.
-
-5️⃣ Agregar o quitar comandos
-El bot es modular, puedes modificar las *case*.
-
-6️⃣ Configurar APIs
-Algunos comandos necesitan API externa.
-
-7️⃣ Personalizar menú
-Puedes editar el menú principal.
-
-🎥 *Tutoriales completos en YouTube*
-
-He creado *más de 10 videos* explicando cómo personalizar el bot paso a paso 👇
-
-📺 YouTube:
-https://youtube.com/playlist?list=PLsjiVxv1dUKw1bKCmvj43AuUDYOm8ghPF&si=NB_u_fSGZx0HhggK
-
-Ahí encontrarás guías para:
-
-✔ Personalizar comandos
-✔ Modificar funciones
-✔ Configurar APIs
-✔ Crear nuevos sistemas
-
-🚀 *NAUFRABOT BASE es totalmente personalizable.*
-
-¡Haz tu propia versión del bot!`
-
-await sock.sendMessage(from,{ text: texto },{ quoted: info })
-
-}
-break
-
-
-case 'comprarapi': {
-
-let texto = `🌐 *COMPRAR API PARA EL BOT*
-
-Algunos comandos del bot necesitan *API externa* para funcionar correctamente.
-
-Por ejemplo:
-
-📥 Descargas
-🎨 Generar stickers con texto
-🌍 HTTP requests
-📹 Descargas de Facebook
-📸 Descargas de redes sociales
-⚙️ Inteligencia artificial 
-
-Para usar estas funciones necesitas una *API Key*.
-
-🚀 *API oficial de Naufrabot*
-
-Puedes comprar tu API aquí:
-
-🔗 https://api.naufrabot.com
-
-📚 *Pasos para usar la API*
-
-1️⃣ Crear una cuenta en la web  
-2️⃣ Comprar tu API Key  
-3️⃣ Copiar la API Key  
-4️⃣ Pegarla en la configuración del bot  
-5️⃣ Reiniciar el bot  
-
-Después de eso los comandos funcionarán correctamente.
-
-✨ *Ventajas de la API*
-
-✔ Respuestas rápidas  
-✔ Alta estabilidad  
-✔ Muchas funciones disponibles  
-✔ Soporte continuo  
-
-🌐 Web oficial:
-https://api.naufrabot.com
-
-🚀 *Potencia tu bot con la API oficial de Naufrabot.*`
-
-await sock.sendMessage(from,{ text: texto },{ quoted: info })
-
-}
-break
-
-
-case 'grupos':
-enviar(`🧩 𝙂𝙍𝙐𝙋𝙊 𝙊𝙁𝙄𝘾𝙄𝘼𝙇 𝙋𝘼𝙍𝘼 𝙐𝙎𝘼𝙍 𝙐𝙉 𝘽𝙊𝙏 𝘼𝘾𝙏𝙄𝙑𝙊 24/7 👇
-
-➫https://chat.whatsapp.com/Jd7WKQBsAhkCG4k1SPxK7r?mode=ac_t`);
-break
-
-case 'serdueño':
-case 'sercreador':
-case 'owner':
-case 'serowner':
-enviar(`*🧩 Mira el siguiente vídeo donde te enseño cómo convertirte en dueño del bot y usar los comandos de owner 👇*
-
-➫https://youtu.be/LugjBfJEoiQ?si=Z-qaGhjNdC-p3fGS`);
-break
-
-case 'canal':
-case 'canales':
-enviar(`𝘾𝙖𝙣𝙖𝙡𝙚𝙨 𝙤𝙛𝙞𝙘𝙞𝙖𝙡𝙚𝙨 𝙥𝙖𝙧𝙖 𝙧𝙚𝙘𝙞𝙗𝙞𝙧:
-🌐𝙉𝙤𝙫𝙚𝙙𝙖𝙙𝙚𝙨 
-🌐𝙎𝙤𝙧𝙩𝙚𝙤𝙨
-🌐𝙄𝙣𝙛𝙤𝙧𝙢𝙖𝙘𝙞𝙤𝙣 
-🌐𝘼𝙘𝙩𝙪𝙖𝙡𝙞𝙯𝙖𝙘𝙞𝙤𝙣𝙚𝙨 𝙨𝙤𝙗𝙧𝙚 𝙚𝙡 𝙗𝙤𝙩
-
-*➫ YouTube* 
-https://youtube.com/@naufrazapp_bots?si=Ie89Ben9B1Mn-jOU
-
-*➫ Sitio web*
-https://naufrabot.com/
-
-*➫ Instagram*
-https://www.instagram.com/naufrabot_official?igsh=cXFwemd0b213dWl1
-
-*➫ Tik tok*
-https://www.tiktok.com/@naufra.zapp?_t=8lMjEw7d9SX&_r=1
-
-*➫ WhatsApp*
-https://whatsapp.com/channel/0029Vaz3WoQ6RGJPJQcMXQ14
-`)
-break
-
-
-
-
-case 'serbot':
-    try {
-        const moneybot = `𝗣𝗲𝗻𝘀𝗮𝘀𝘁𝗲 𝗾𝘂𝗲 𝘁𝗲 𝗴𝗲𝗻𝗲𝗿𝗮𝗿𝗶𝗮 𝗲𝗹 𝗖𝗼𝗱𝗶𝗴𝗼 𝗤𝗥, ¿𝗩𝗲𝗿𝗱𝗮𝗱? 😂
-
-𝗟𝗮𝗺𝗲𝗻𝘁𝗮𝗯𝗹𝗲𝗺𝗲𝗻𝘁𝗲, *𝗲𝗻 𝗲𝘀𝘁𝗲 𝗯𝗼𝘁 𝗻𝗼 𝗽𝘂𝗲𝗱𝗲𝘀 𝘀𝗲𝗿 𝘀𝘂𝗯 𝗯𝗼𝘁* 𝗽𝗼𝗿𝗾𝘂𝗲 𝗲𝘀𝗼 𝗰𝗼𝗺𝗽𝗿𝗼𝗺𝗲𝘁𝗲 𝗹𝗼𝘀 𝗿𝗲𝗰𝘂𝗲𝗿𝘀𝗼𝘀 𝗱𝗲𝗹 𝘀𝗲𝗿𝘃𝗶𝗱𝗼𝗿 𝘆 𝗹𝗼 𝗵𝗮𝗰𝗲 𝗺𝗮𝘀 𝗹𝗲𝗻𝘁𝗼.  
-𝗦𝗶 𝗿𝗲𝗮𝗹𝗺𝗲𝗻𝘁𝗲 𝗾𝘂𝗲𝗿𝗲𝘀 𝘀𝗲𝗿 𝘀𝘂𝗯 𝗯𝗼𝘁, 𝗽𝘂𝗲𝗱𝗲𝘀 𝗼𝗯𝘁𝗲𝗻𝗲𝗿 𝗺𝗮𝘀 𝗶𝗻𝗳𝗼𝗿𝗺𝗮𝗰𝗶𝗼𝗻 𝗲𝗻 𝗻𝘂𝗲𝘀𝘁𝗿𝗮 𝗽𝗮𝗴𝗶𝗻𝗮 𝘄𝗲𝗯:  
-🔗 https://naufrabot.com/subbots/`;
-
-        // Enviar el mensaje final
-        await enviar(moneybot);
-
-    } catch (e) {
-        console.error(e);
-        enviar("Error al procesar el comando.");
-    }
-break;
-
 
 //AJUSTES DEL GRUPO
-
-case 'welcome':
-case 'bienvenida': {
+case 'delbye': {
 if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
 
+let byeData = JSON.parse(fs.readFileSync('./settings/Grupo/Json/bye.json'))
+
+if (byeData[from]) {
+  delete byeData[from]
+}
+
+fs.writeFileSync(
+  './settings/Grupo/Json/bye.json',
+  JSON.stringify(byeData, null, 2)
+)
+
+return enviar(`✅ Despedida personalizada eliminada.
+
+☁️ Se restauró la despedida original.
+
+> Ania Studio | 2026 🌸`)
+}
+break
+case 'bye': {
+if (!isGroup) return enviar(respuesta.grupos)
 if (!isGroupAdmins) return enviar(respuesta.admin)
 if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
 
-if (!args[0]) {
+const byeStatusPath = './settings/Grupo/Json/bye_status.json'
+let byeStatus = JSON.parse(fs.readFileSync(byeStatusPath))
+
+if (args[0] === '1') {
+  if (byeStatus.includes(from)) {
+    return enviar('✅ Las despedidas ya están activadas.')
+  }
+
+  byeStatus.push(from)
+
+  fs.writeFileSync(
+    byeStatusPath,
+    JSON.stringify(byeStatus, null, 2)
+  )
+
+  return enviar('✅ Despedidas activadas correctamente.')
+}
+
+if (args[0] === '0') {
+  if (!byeStatus.includes(from)) {
+    return enviar('❌ Las despedidas ya están desactivadas.')
+  }
+
+  byeStatus = byeStatus.filter(id => id !== from)
+
+  fs.writeFileSync(
+    byeStatusPath,
+    JSON.stringify(byeStatus, null, 2)
+  )
+
+  return enviar('✅ Despedidas desactivadas correctamente.')
+}
+
 return enviar(`✦ Usa:
 
-${prefixo}welcome 1 → Activar
-${prefixo}welcome 0 → Desactivar`)
+${prefixo}bye 1 → Activar
+${prefixo}bye 0 → Desactivar`)
 }
+break
+case 'setbye': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
 
-if (args[0] == "1") {
+const textoBye = args.join(' ').trim()
+if (!textoBye) return enviar(`Uso: ${prefixo}setbye <mensaje>`)
 
-if (iswelkom) return enviar("✅ Las bienvenidas y despedidas ya están activadas.")
+let byeData = JSON.parse(fs.readFileSync('./settings/Grupo/Json/bye.json'))
 
-welkom.push(from)
-fs.writeFileSync(
-'./settings/Grupo/Json/welkom.json',
-JSON.stringify(welkom, null, 2)
-)
-
-return enviar("✅ Bienvenidas y despedidas activadas correctamente.")
-
-}
-
-if (args[0] == "0") {
-
-if (!iswelkom) return enviar("❌ Las bienvenidas ya están desactivadas.")
-
-const index = welkom.indexOf(from)
-
-if (index !== -1) {
-welkom.splice(index, 1)
-}
+byeData[from] = textoBye
 
 fs.writeFileSync(
-'./settings/Grupo/Json/welkom.json',
-JSON.stringify(welkom, null, 2)
+  './settings/Grupo/Json/bye.json',
+  JSON.stringify(byeData, null, 2)
 )
 
-return enviar("✅ Bienvenidas y despedidas desactivadas correctamente.")
+return enviar(`✅ Mensaje de despedida personalizado guardado.`)
+}
+break
+case 'delwelcome': {if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
 
+let welcomeData = JSON.parse(fs.readFileSync('./settings/Grupo/Json/welcome.json'))
+
+if (welcomeData[from]) {
+  delete welcomeData[from]
 }
 
-enviar(`✦ Usa:
+fs.writeFileSync(
+  './settings/Grupo/Json/welcome.json',
+  JSON.stringify(welcomeData, null, 2)
+)
+
+return enviar(`✅ Bienvenida personalizada eliminada.
+
+☁️ Se restauró la bienvenida original.
+
+> Ania Studio | 2026 🌸`)
+}
+break
+case 'setwelcome': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+
+const textoWelcome = args.join(' ').trim()
+if (!textoWelcome) return enviar(`Uso: ${prefixo}setwelcome <mensaje>`)
+
+let welcomeData = JSON.parse(fs.readFileSync('./settings/Grupo/Json/welcome.json'))
+
+welcomeData[from] = textoWelcome
+
+fs.writeFileSync(
+  './settings/Grupo/Json/welcome.json',
+  JSON.stringify(welcomeData, null, 2)
+)
+
+return enviar(`✅ Mensaje de bienvenida personalizado guardado.`)
+}
+break
+case 'welcome':
+case 'bienvenida': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+
+const welcomeStatusPath = './settings/Grupo/Json/welcome_status.json'
+let welcomeStatus = JSON.parse(fs.readFileSync(welcomeStatusPath))
+
+if (args[0] === '1') {
+  if (welcomeStatus.includes(from)) {
+    return enviar('✅ Las bienvenidas ya están activadas.')
+  }
+
+  welcomeStatus.push(from)
+
+  fs.writeFileSync(
+    welcomeStatusPath,
+    JSON.stringify(welcomeStatus, null, 2)
+  )
+
+  return enviar('✅ Bienvenidas activadas correctamente.')
+}
+
+if (args[0] === '0') {
+  if (!welcomeStatus.includes(from)) {
+    return enviar('❌ Las bienvenidas ya están desactivadas.')
+  }
+
+  welcomeStatus = welcomeStatus.filter(id => id !== from)
+
+  fs.writeFileSync(
+    welcomeStatusPath,
+    JSON.stringify(welcomeStatus, null, 2)
+  )
+
+  return enviar('✅ Bienvenidas desactivadas correctamente.')
+}
+
+return enviar(`✦ Usa:
 
 ${prefixo}welcome 1 → Activar
 ${prefixo}welcome 0 → Desactivar`)
@@ -1172,17 +1136,35 @@ case 'revivir':
 if(!isGroup) return enviar('Es enserio invocar en un chat , te violo tu tio verdad')
 if(!isGroupAdmins) return enviar(respuesta.admin) 
 members_id = []
+console.log("=== DEBUG PARTICIPANTE ===");
+console.log(groupMembers[0]);
+console.log("=== FIN DEBUG ===");
+for (let i = 0; i < groupMembers.length; i++) {
+    if (!groupMembers[i]?.id) {
+        console.log("=== PARTICIPANTE SIN ID ===");
+        console.log(groupMembers[i]);
+        console.log("=== FIN PARTICIPANTE SIN ID ===");
+    }
+}
 teks = (args.length > 1) ? body.slice(8).trim(): ''
 teks += `𝐓𝐎𝐓𝐀𝐋 : ${groupMembers.length}\n`
 nu = 0
 for (let mem of groupMembers) {
+if (!mem?.id) continue
 nu += 1
 teks += ` ➫[${nu.toString()}] @${mem.id.split('@')[0]}\n`
 members_id.push(mem.id)
 }
 mentions(`
-🗣️💬 ❝¡𝑳𝑳𝒂𝒎𝒂𝒅𝒂 𝒂 𝒕𝒐𝒅𝒐 𝑬𝒍 𝑴𝒖𝒏𝒅𝒐!❞ \n\n➫ ${teks}
-`, members_id, true)
+✨🌸✦ 𝑳𝒍𝒂𝒎𝒂𝒅𝒂 𝒂 𝒕𝒐𝒅𝒐𝒔 ✦🌸✨
+
+🌹 𝐓𝐎𝐓𝐀𝐋 𝐃𝐄 𝐈𝐍𝐓𝐄𝐆𝐑𝐀𝐍𝐓𝐄𝐒: ${groupMembers.length}
+
+${teks.replace(`𝐓𝐎𝐓𝐀𝐋 : ${groupMembers.length}\n`, '')}
+
+🌸 *𝑈𝑛 𝑔𝑢𝑠𝑡𝑜 𝑡𝑒𝑛𝑒𝑟𝑙𝑜𝑠 𝑎𝑞𝑢𝑖* 🌹
+
+> Ania Studio | 2026 🌸 `, members_id, true)
 break
 
 
@@ -1192,8 +1174,8 @@ if(!isGroupAdmins) return enviar(respuesta.admin)
 men = []
 num = 0
 teks = `
-🗣💬 ❝𝑨𝒕𝒆𝒏𝒄𝒊𝒐𝒏 𝒂 𝒆𝒔𝒕𝒆 𝑨𝒏𝒖𝒏𝒄𝒊𝒐.❞
- 👉 ❝ ${q} ❞ 👈 
+👀💬 ❝𝑨𝒕𝒆𝒏𝒄𝒊𝒐𝒏 𝒂 𝒆𝒔𝒕𝒆 𝑨𝒏𝒖𝒏𝒄𝒊𝒐.❞
+ ✨ ❝ ${q} ❞ ✨
 \n`
 for(let m of groupMembers){
 num +=1 
@@ -1282,8 +1264,212 @@ enviar('Accion realizada exitosamente')
 }
 break 
      
+case 'promote':
+case 'daradmin': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
 
+let mentioned = obtenerMencionado(info)
 
+if (!mentioned) {
+  return enviar('⚠️ Debes mencionar a alguien para darle administrador.')
+}
+
+if (mentioned === BotNumber || mentioned === owner) {
+  return enviar('🤨 No puedo modificar los permisos de este usuario.')
+}
+
+await sock.groupParticipantsUpdate(from, [mentioned], 'promote')
+
+return enviar('✅ Administrador otorgado correctamente.')
+}
+break
+
+case 'demote': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+
+let mentioned = obtenerMencionado(info)
+
+if (!mentioned) {
+  return enviar('⚠️ Debes mencionar a alguien para quitarle administrador.')
+}
+
+if (mentioned === BotNumber || mentioned === owner) {
+  return enviar('🤨 No puedo modificar los permisos de este usuario.')
+}
+
+await sock.groupParticipantsUpdate(from, [mentioned], 'demote')
+
+return enviar('✅ Administrador retirado correctamente.')
+}
+break
+
+case 'del': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+
+const contextInfo = info.message?.extendedTextMessage?.contextInfo
+
+if (!contextInfo?.stanzaId) {
+  return enviar('⚠️ Responde al mensaje que quieres eliminar usando .del')
+}
+
+const participant = contextInfo.participant || contextInfo.remoteJid
+
+try {
+  await sock.sendMessage(from, {
+    delete: {
+      remoteJid: from,
+      fromMe: false,
+      id: contextInfo.stanzaId,
+      participant: participant
+    }
+  })
+
+  await sock.sendMessage(from, {
+    delete: info.key
+  })
+
+} catch (error) {
+  console.error('Error al eliminar mensaje:', error)
+  return enviar('❌ No pude eliminar el mensaje.')
+}
+}
+break
+
+case 'mute': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+
+const mentioned = obtenerMencionado(info)
+
+if (!mentioned) {
+  return enviar('⚠️ Debes mencionar a alguien para silenciar.')
+}
+
+if (mentioned === BotNumber || mentioned === owner) {
+  return enviar('🤨 No puedo silenciar a este usuario.')
+}
+
+const mutePath = './settings/Grupo/Json/mute.json'
+let muteData = {}
+
+if (fs.existsSync(mutePath)) {
+  muteData = JSON.parse(fs.readFileSync(mutePath))
+}
+
+if (!muteData[from]) {
+  muteData[from] = []
+}
+
+if (muteData[from].includes(mentioned)) {
+  return enviar('⚠️ Este usuario ya está silenciado.')
+}
+
+muteData[from].push(mentioned)
+
+fs.writeFileSync(
+  mutePath,
+  JSON.stringify(muteData, null, 2)
+)
+
+return enviar(`🔇 Usuario silenciado correctamente.`)
+}
+break
+
+case 'unmute': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+
+const mentioned = obtenerMencionado(info)
+
+if (!mentioned) {
+  return enviar('⚠️ Debes mencionar a alguien para quitarle el silencio.')
+}
+
+const mutePath = './settings/Grupo/Json/mute.json'
+let muteData = {}
+
+if (fs.existsSync(mutePath)) {
+  muteData = JSON.parse(fs.readFileSync(mutePath))
+}
+
+if (!muteData[from] || !muteData[from].includes(mentioned)) {
+  return enviar('⚠️ Este usuario no está silenciado.')
+}
+
+muteData[from] = muteData[from].filter(id => id !== mentioned)
+
+if (muteData[from].length === 0) {
+  delete muteData[from]
+}
+
+fs.writeFileSync(
+  mutePath,
+  JSON.stringify(muteData, null, 2)
+)
+
+return enviar(`🔊 Usuario puede escribir nuevamente.`)
+}
+break
+
+case 'add': {
+if (!isGroup) return enviar(respuesta.grupos)
+if (!isGroupAdmins) return enviar(respuesta.admin)
+if (!isBotGroupAdmins) return enviar(respuesta.botadmin)
+
+const numero = args[0]?.replace(/\D/g, '')
+
+if (!numero) {
+  return enviar(`⚠️ Usa: ${prefixo}add <número>
+
+Ejemplo:
+${prefixo}add 573001234567`)
+}
+
+try {
+  const [result] = await sock.onWhatsApp(numero)
+
+  if (!result || !result.exists) {
+    return enviar('❌ Ese número no está registrado en WhatsApp.')
+  }
+
+  const jid = result.jid
+
+  if (jid === BotNumber || jid === owner) {
+    return enviar('🤨 No puedo agregar este usuario.')
+  }
+
+  const miembro = groupMembers.find(p => p.id === jid)
+
+  if (miembro) {
+    return enviar('⚠️ Ese usuario ya está en el grupo.')
+  }
+
+  const respuestaAdd = await sock.groupParticipantsUpdate(
+    from,
+    [jid],
+    'add'
+  )
+
+  console.log('Resultado add:', respuestaAdd)
+
+  return enviar(`✅ Se intentó agregar correctamente a @${numero}`, {
+    mentions: [jid]
+  })
+
+} catch (error) {
+  console.error('Error al agregar usuario:', error)
+  return enviar('❌ No pude agregar a ese número al grupo.')
+}
+}
+break
 
 // ⚙️ Comando para activar/desactivar antilink
 case 'antilink':
@@ -1364,15 +1550,9 @@ var boij = RSM?.videoMessage || info.message?.videoMessage || RSM?.viewOnceMessa
 if(boij2){
 enviar(`Creando tu sticker supere un poco ❤️`)
 var pack = `
-👑 Dueño 👑
- ✅Naufra
-⭐𝐂𝐫𝐞𝐚𝐝𝐨 𝐩𝐨𝐫 :
- ${pushname} `
+ > 𝘼𝙉𝙄𝘼 𝙎𝙏𝙐𝘿𝙄𝙊 🌸`
 var author2 = ` 
-🤖 𝐁𝐨𝐭 🤖
- ⃟NaufraBot
-💐 𝐆𝐫𝐮𝐩𝐨💐
-${groupName} `
+ > 𝘼𝙉𝙄𝘼 𝙎𝙏𝙐𝘿𝙄𝙊 🌸`
 owgi = await getFileBuffer(boij2, 'image')
 let encmediaa = await sendImageAsSticker2(sock, from, owgi, info, { packname:pack, author:author2})
 await DLT_FL(encmediaa)
@@ -1381,15 +1561,9 @@ await delkoin(sender,1)
 } else if(boij && boij.seconds < 11){
 enviar(`Creando tu Sticker ${pushname}`)
 var pack = `
-👑 Dueño 👑
- ✅Naufra
-⭐𝐂𝐫𝐞𝐚𝐝𝐨 𝐩𝐨𝐫 :
- ${pushname} `
+ > 𝘼𝙉𝙄𝘼 𝙎𝙏𝙐𝘿𝙄𝙊 🌸`
 var author2 = ` 
-🤖 𝐁𝐨𝐭 🤖
- ⃟NaufraBot
-💐 𝐆𝐫𝐮𝐩𝐨💐
-${groupName} `
+ > 𝘼𝙉𝙄𝘼 𝙎𝙏𝙐𝘿𝙄𝙊 🌸`
 owgi = await getFileBuffer(boij, 'video')
 let encmedia = await sendVideoAsSticker2(sock, from, owgi, info, { packname:pack, author:author2})
 await DLT_FL(encmedia)
@@ -1657,12 +1831,14 @@ foto = 'https://i.postimg.cc/85NsPp8j/20260131-152616.jpg'
 
 const Mp = `
 ╔══✦❖【 𝑻𝒖 𝑷𝒆𝒓𝒇𝒊𝒍 】❖✦══╗
-🏷️  𝐍𝐨𝐦𝐛𝐫𝐞      »  @${sender.split('@')[0]}
-⚔️  𝐑𝐚𝐧𝐠𝐨       »  ${Mlevel}
-👑  𝐑𝐞𝐩𝐮𝐭𝐚𝐜𝐢𝐨́𝐧  »  ${myrep2}
-💰  𝐃𝐢𝐧𝐞𝐫𝐨     »  ₹${saldo} 𝐑𝐮𝐩𝐢𝐚𝐬
-📈  𝐍𝐢𝐯𝐞𝐥       »  ${Mnv} ➜ ${Mnv + 1}
-📚  𝐄𝐗𝐏         »  ${Xp} / ${Rxxp + 1000}
+
+- 🏷️ 𝐍𝐨𝐦𝐛𝐫𝐞 »  @${sender.split('@')[0]}
+- ⚔️ 𝐑𝐚𝐧𝐠𝐨 »  ${Mlevel}
+- 👑 𝐑𝐞𝐩𝐮𝐭𝐚𝐜𝐢𝐨́𝐧 »  ${myrep2}
+- 💰 𝐃𝐢𝐧𝐞𝐫𝐨 »  ₹${saldo} 𝐑𝐮𝐩𝐢𝐚𝐬
+- 📈 𝐍𝐢𝐯𝐞𝐥 »  ${Mnv} ➜ ${Mnv + 1}
+- 📚 𝐄𝐗𝐏 »  ${Xp} / ${Rxxp + 1000}
+
 ╚══✦❖【 𝐏𝐫𝐨𝐠𝐫𝐞𝐬𝐨 】❖✦══╝
 ▰▰ ${Mrxp} ▰▰
 `
@@ -1794,50 +1970,6 @@ await addXp(sender,montoExperiencia)
 }
 break
 
- 
-
-case 'reg': case 'registrarme': case 'registrame': case 'rg':
-    if (isReg) return enviar(respuesta.yaregistro)
-    const nombre = pushname
-    await AddReg(sender, nombre)
-    sock.sendMessage(from, {
-        image: { url: JpgBot },
-        caption: `★━━━━★━━━━★★━━━━★
-         *༻  𝐑𝐄𝐆𝐈𝐒𝐓𝐑𝐎  ༺*
-🎉𝑅𝑒𝑔𝑖𝑠𝑡𝑟𝑜 𝑐𝑜𝑚𝑝𝑙𝑒𝑡𝑎𝑑𝑜 *${nombre}* 🥳
-🪙𝑹𝒆𝒄𝒊𝒃𝒊𝒔𝒕𝒆 *₹50 Rupias* 🪙 𝒄𝒐𝒎𝒐 𝑹𝒆𝒈𝒂𝒍𝒐 𝒅𝒆 𝑩𝒊𝒆𝒏𝒗𝒆𝒏𝒊𝒅𝒂.
-◆━━━━━━━▣✦▣━━━━━━━━◆`
-    }, { quoted: info })
-    break
-
-
-case 'levelup': {
-const XpR = xpOfsender(sender)
-const Rxxp = Rxp(sender)
-if(XpR >= Rxxp + 1000) {
-await addLevel(sender , 1)
-sleep(100)
-await addkoin(sender,10)
-sleep(100)
-await addXp(sender,100)
-sleep(100)
-await addRxp(sender,1000)
-const Mup = ` 
-        ★━━━ 𝐒𝐔𝐁𝐈𝐒𝐓𝐄 𝐃𝐄 𝐍𝐈𝐕𝐄𝐋 ━━━★
-✪ @${sender.split('@')[0]}
-🎉 ¡𝑭𝒆𝒍𝒊𝒄𝒊𝒅𝒂𝒅𝒆𝒔 𝑯𝒂𝒛 𝒅𝒆𝒔𝒃𝒍𝒐𝒒𝒖𝒆𝒂𝒅𝒐 𝒖𝒏 𝒏𝒖𝒆𝒗𝒐 𝒓𝒂𝒏𝒈𝒐! 💪
-`
-sock.sendMessage(from,{text : Mup , mentions : [sender]},{quoted : info})
-} else {
-enviar(`
-❌ 𝑬𝒙𝒑𝒆𝒓𝒊𝒆𝒏𝒄𝒊𝒂 𝒊𝒏𝒔𝒖𝒇𝒊𝒄𝒊𝒆𝒏𝒕𝒆. ${pushname} 𝒅𝒆𝒃𝒆𝒓𝒂𝒔 𝒆𝒏𝒕𝒓𝒆𝒏𝒂𝒓 𝒎𝒂𝒔 𝒔𝒆𝒈𝒖𝒊𝒅𝒐. 
-`)
-}
-}
-break
-
-
-
 
 case 'minar' : {
 if(!isReg) return enviar(respuesta.registro)
@@ -1917,9 +2049,7 @@ ${vit}
 enviar(datatt);
 }
 }
-        break
-
-
+break
 
 
 case "pescar": {
@@ -1965,7 +2095,7 @@ if (pptb === "delfin") {
 
 const datatt = `
 ╔════ ⭑✦.   ✦⭑ ════╗
-         ❖ 𝙋𝙀𝙎𝘾𝘼 𝙀𝙉 𝙀𝙇 𝙈𝘼𝙍 ❖
+ ❖ 𝙋𝙀𝙎𝘾𝘼 𝙀𝙉 𝙀𝙇 𝙈𝘼𝙍 ❖
 ${vit}
 ⌛ 𝙑𝙪𝙚𝙡𝙫𝙚 𝙚𝙣 8 𝙝𝙤𝙧𝙖𝙨...
 ╚════ ⭑✦ ❖ ✦⭑ ════╝
@@ -1975,34 +2105,9 @@ ${vit}
 enviar(datatt);
 }
 }
-        break
+break
 
-
-
-
-
-
-
-case 'listreg' : {
-R_ = []
-teks = '*REGISTRADOS* 😼\n'
-for(let R of registro){
-teks += `• @${R.id.split('@')[0]}\n`
-R_.push(R.id)
-}
-teks += '• ' + registro.length
-mentions(teks,R_,true)
-}
-break 
-
-
-
-
-case 'regalar':
-case 'tradecoin':
-case 'tradecoins':
-case 'enviarcoins':
-case 'enviar': {
+case 'regalar': {
   if (!isGroup) return enviar("⚠️ Este comando solo funciona en grupos.");
 
   (async () => {
@@ -2035,14 +2140,7 @@ case 'enviar': {
 break;
 
 
-
-
-
-
-
-
-
-case 'rep' : case 'mirep' : case 'mireputacion':
+case 'reputacion':
 if(!isReg) return enviar(respuesta.registro)
 const myrep = repUser(sender)
 const mitulamide30milimetros = `
@@ -2078,7 +2176,7 @@ if (myrep < 20) {
 
 break 
 
-case 'rank' : case 'rankrep' : 
+case 'rank' :
 if(!isGroup) return 
 if(!isGroupAdmins) return enviar(respuesta.admin)
 let teks2 = `
@@ -2352,9 +2450,9 @@ await sock.sendMessage(from, {
 image: { url: data.Miniatura },
 caption: `「✪」 *${data.Titulo}*
 
-ⴵ Duración: ${data.Duracion}
-✐ Canal: ${data.Canal.Nombre}
-👁 Vistas: ${data.Visualizaciones}
+*ⴵ Duración: ${data.Duracion}*
+*✐ Canal: ${data.Canal.Nombre}*
+*👁 Vistas: ${data.Visualizaciones}*
 
 📥 Descargando audio (modo iPhone)... Esto será un poco más lento que el /play, así que usa esto solo si tienes iPhone`
 }, { quoted: info })

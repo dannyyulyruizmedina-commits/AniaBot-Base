@@ -1,7 +1,7 @@
 {
-  "name": "naufraBase",
+  "name": "ANIA BOT BASE",
   "version": "4.0.0",
-  "description": "Base creada desde cero y 100% midificable.",
+  "description": "Base sacada de la bot original, Baby Ania, 100% modificable, Uso restringido! Únicamente Para el curso de Nébula VIP Studio",
   "main": "index.js",
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
@@ -31,6 +31,6 @@
     "qs": "^6.14.0",
     "request": "^2.88.2"
   },
-  "author": "Naufra",
+  "author": "Ania",
   "license": "ISC"
 }

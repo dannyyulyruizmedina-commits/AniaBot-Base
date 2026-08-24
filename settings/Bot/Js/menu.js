@@ -1,184 +1,61 @@
-const Menu = ( timeFt , Bot , prefixo, sender , groupName  , groupMembers ) => {  
-return `
- ❱ ➢${timeFt}, @${sender.split('@')[0]} 
-╭══════════════════ 
-│✦ ➮ sᴏʏ: ${Bot}
-│✦ ➮ ᴘʀᴇғɪᴊᴏ ᴀᴄᴛᴜᴀʟ: *${prefixo}*
-│✦ ➮ ᴘᴀɢɪɴᴀ ᴏғɪᴄɪᴀʟ:  https://naufrabot.com
-╰━━━━━─「✪」─━━━━━
+const Menu = (timeFt, Bot, prefixo, sender, groupName, memberCount) => {
+  const numero = sender.split('@')[0]
 
-➮☆ۣۜۜ͜͡ \`📂 ʟɪsᴛᴀ ᴅᴇ ᴄᴏᴍᴀɴᴅᴏs\` ꔷ㆒⸼݇҉ֻ᠂⃟✥    
+  return `
+╭────────────────────╮
+│   🌸 ANIA BOT BASE 🌸
+│      MENÚ PRINCIPAL
+╰────────────────────╯
 
-  ━━━━━─「✪」─━━━━━
-    
-╭
-  ❍ 𝐌𝐄𝐍𝐔 𝐈𝐍𝐅𝐎  ❐
-╰
-*➢ping*
-> ➥Velocidad del bot
-*➢perfil*
-> ➥Mira tu perfil
-*➢ship*
-> ➥porcentaje de que le guste alguien
-*➢botcompleto*     
-> ➥Como tener un bot completo
-*➢grupos*
-> ➥Grupos oficiales 
-*➢canales*
-> ➥Canales oficiales
-*➢serbot*
-> ➥Como ser un bot
-*➢Personalizarbot*
-> ➥Como editar este bot
-*➢miapi*
-> ➥Mira tu API key
-*➢comprarapi*
-> ➥Como adquirir una clave API 
- 
-╭
-   ❍ 𝐌𝐄𝐍𝐔 𝐀𝐃𝐌𝐈𝐍  ❐
-╰  
-*➢welcome 1/0*
-> ➥Activa/desactiva las bienvenidas y despedidas
-*➢antilink 1/0*      
-> ➥Activa/desactiva anti enlaces
-*➢modoadmin 1/0*
-> ➥Activa/desactiva el uso de solo adm.
-*➢todos*
-> ➥menciona a todos con @
-*➢anuncio*
-> ➥otra forma de mencionar a todos
-*➢ban/kick*
-> ➥Elima a un participante
-*➢notify*
-> ➥notificación fantasma
-*➢grupo*
-> ➥abrir/cerrar grupo
-*➢rankrep*
-> ➥Ranking de reputación
-*➢rankcoins*
-> ➥Ranking de coins
-*➢ranknivel*
-> ➥Ranking de nivel
- 
- ╭
-  ❍ 𝐌𝐄𝐍𝐔 𝐃𝐄𝐒𝐂𝐀𝐑𝐆𝐀𝐒  ❐
-╰
-*➢play*
-> ➥Descarga músicas 
-*➢play2*
-> ➥Descarga músicas iPhone
-*➢playvideo*
-> ➥Descarga videos 
-*➢playdoc*
-> ➥Descarga videos en documento
-*➢tiktok*
-> ➥Descarga videos de tiktok
-*➢x*
-> ➥Descarga videos X(Twitter)
-*➢facebook*
-> ➥Descarga videos de facebook 
-*➢instagram*
-> ➥Descarga videos de Instagram
-*➢mediafire*
-> ➥Descarga archivos de mediafire 
-*➢descargarapk*
-> ➥Desacarga apk
-*➢pinterest*
-> ➥Desacarga imagenes de pinterest
-                  
-╭
-   ❍ 𝐌𝐄𝐍𝐔 𝐅𝐈𝐆𝐔𝐒  ❐
-╰
-*➢sticker*
-> ➥convierte imagen/vídeo a sticker
-*➢attp*
-> ➥Convierte texto a sticker 
-*➢attp2*
-> ➥Convierte texto a sticker 
-*➢attp3*
-> ➥Convierte texto a sticker 
-*➢Emojimix*           
-> ➥Mezcla emojis
-╭  
-   ❍ 𝐌𝐄𝐍𝐔 𝐇𝐄𝐑𝐑𝐀𝐌𝐈𝐄𝐍𝐓𝐀𝐒  ❐
-╰   
-*➢toimg*
-> ➥convierte sticker a imagen 
-*➢tomp3*      
-> ➥Convierte vídeo a audio
-*➢ytsearch*
-> ➥Buscar videos en Youtube
-*➢calc*
-> ➥Calculadora en WhatsApp 
-*➢wikipedia*
-> ➥Busca información en Wikipedia
-*➢google*
-> ➥Busca información en Google 
-*➢simi*
-> ➥Habla hot con el bot
-*➢horoscopo*
-> ➥pronostico diario horoscopo
-*➢ia*
-> ➥preguntale a IA
-*➢chatgpt*
-> ➥preguntale a chatpgt 
- 
-╭                    
-   ❍ 𝐌𝐄𝐍𝐔 - 𝐄𝐂𝐎𝐍𝐎𝐌𝐈𝐀  ❐       
-╰      
-*➢Nivel*
-> ➥Mira tu nivel
-*➢cartera*
-> ➥Revisa tu dinero 
-*➢reg*
-> ➥Regiatrate en el sistema
-*➢listreg*
-> ➥Lista de registrados 
-*➢ruleta* 
-> ➥Juega a la ruleta 
-*➢levelup*
-> ➥Sube de nivel 
-*➢minar*
-> ➥Mina y gana
-*➢regalar*
-> ➥Regala dinero
-*➢mireputacion*
-> ➥Mira tu reputación
-*➢tragamonedas*
-> ➥Juega a tragamonedas 
-*➢dayli*   
-> ➥Recibe tu recompensa diaria
-*➢pescar*      
-> ➥Pesca y gana
-*➢tienda*     
-> ➥Compra y vende experiencia 
-*➢casar* 
-> ➥Parejas aleatorias
- 
-╭
-    ❍ 𝐌𝐄𝐍𝐔 𝐂𝐑𝐄𝐀𝐃𝐎𝐑  ❐
-╰  
-*➢sercreador*
-> ➥Como convertirte en dueño
-*➢antiprivado*            
-> ➥No aseptar personas en tu privado
-*➢revelarvisu*
-> ➥Revela imagen de vista única 
-*➢reiniciar*
-> ➥Reinicia el bot
-*➢setprefix*
-> ➥Cambia el prefijo del bot
-*➢bangp*
-> ➥Bloquea el uso del bot en un grupo
-*➢unbangp*
-> ➥Desbloquea el uso del bot en un grupo 
-*➢botoff*
-> ➥Apaga el bot      
-*➢boton*
-> ➥Prende el bot
- 
-`}
-module.exports = Menu 
+${timeFt}, @${numero} 💗
 
+╭────── INFORMACIÓN ──────╮
+│ ✦ ${prefixo}menu
+│ ✦ ${prefixo}ping
+│ ✦ ${prefixo}infobot
+╰─────────────────────────╯
 
+╭──────── GRUPO ──────────╮
+│ ✦ ${prefixo}n
+│ ✦ ${prefixo}antiprivado
+│ ✦ ${prefixo}minar
+│ ✦ ${prefixo}listreg
+│ ✦ ${prefixo}rank
+│ ✦ ${prefixo}rankcoins
+│ ✦ ${prefixo}ranknivel
+│ ✦ ${prefixo}formarpareja
+╰─────────────────────────╯
+
+╭────────── IA ───────────╮
+│ ✦ ${prefixo}ia
+╰─────────────────────────╯
+
+╭────── HERRAMIENTAS ─────╮
+│ ✦ ${prefixo}toimg
+│ ✦ ${prefixo}ytsearch
+│ ✦ ${prefixo}play
+│ ✦ ${prefixo}play2
+│ ✦ ${prefixo}ytmp4
+│ ✦ ${prefixo}playdoc
+│ ✦ ${prefixo}fb
+│ ✦ ${prefixo}tiktok
+│ ✦ ${prefixo}twitter
+│ ✦ ${prefixo}mediafire
+│ ✦ ${prefixo}instagram
+│ ✦ ${prefixo}pinterest
+│ ✦ ${prefixo}google
+│ ✦ ${prefixo}wikipedia
+│ ✦ ${prefixo}horoscopo
+│ ✦ ${prefixo}apk
+╰─────────────────────────╯
+
+╭────── ANIA STUDIO ──────╮
+│ ✦ ${prefixo}botoff
+│ ✦ ${prefixo}setprefix
+╰─────────────────────────╯
+
+> ANIA STUDIO | 2026 🌸
+`
+}
+
+module.exports = Menu
