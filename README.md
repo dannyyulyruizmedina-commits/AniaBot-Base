@@ -29,14 +29,14 @@ pkg install git nodejs -y
 ### 3️⃣ Descargar AniaBot Base
 
 ```bash
-cd /sdcard
+cd ~
 git clone https://github.com/dannyyulyruizmedina-commits/AniaBot-Base.git
 ```
 
 ### 4️⃣ Entrar a la carpeta
 
 ```bash
-cd /sdcard/AniaBot-Base
+cd ~/AniaBot-Base
 ```
 
 ### 5️⃣ Instalar dependencias
@@ -56,7 +56,7 @@ node index.js
 ## 🔄 PARA VOLVER A INICIAR
 
 ```bash
-cd /sdcard/AniaBot-Base
+cd ~/AniaBot-Base
 node index.js
 ```
 
