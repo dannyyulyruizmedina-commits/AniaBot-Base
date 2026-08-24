@@ -14,12 +14,19 @@
 
 ```bash
 pkg update -y && pkg upgrade -y
+
+2️⃣ Instalar Git y Node.js
 pkg install git nodejs -y
+3️⃣ Descargar AniaBot Base
 cd /sdcard
 git clone https://github.com/dannyyulyruizmedina-commits/AniaBot-Base.git
+4️⃣ Entrar a la carpeta
 cd /sdcard/AniaBot-Base
+5️⃣ Instalar dependencias
 npm install
+6️⃣ Iniciar el bot
 node index.js
+🔄 PARA VOLVER A INICIAR
 cd /sdcard/AniaBot-Base
 node index.js
 📲 CONTACTO
