@@ -66,11 +66,11 @@ node index.js
 
 ## 📲 CONTACTO
 
-📱 [**WhatsApp — @ANIA_DZN**](https://wa.me/)
+📱 [**WhatsApp**](https://wa.me/qr/HEGJHCG2FSK3I1)
 
-📸 [**Instagram — @aniastudio18**](https://instagram.com/aniastudio18)
+📸 [**Instagram**](https://instagram.com/aniastudio18)
 
-🎵 [**TikTok — @aniadzn18**](https://tiktok.com/@aniadzn18)
+🎵 [**TikTok**](https://tiktok.com/@aniadzn18)
 
 📢 **Canal de WhatsApp:**
 
