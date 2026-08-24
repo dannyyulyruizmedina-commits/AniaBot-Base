@@ -66,11 +66,11 @@ node index.js
 
 ## 📲 CONTACTO
 
-📱 **WhatsApp:** +57 3245517485
+📱 [**WhatsApp — @ANIA_DZN**](https://wa.me/)
 
-📸 **Instagram:** @aniastudio18
+📸 [**Instagram — @aniastudio18**](https://instagram.com/aniastudio18)
 
-🎵 **TikTok:** @aniadzn18
+🎵 [**TikTok — @aniadzn18**](https://tiktok.com/@aniadzn18)
 
 📢 **Canal de WhatsApp:**
 
